@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Oara Haven — Where Luxury Finds Privacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #080707;
+    --bg2: #0e0c0b;
+    --bg3: #141110;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f0dfa0;
+    --cream: #f5ede0;
+    --cream-dim: #c8bba8;
+    --white: #ffffff;
+    --border: rgba(201,168,76,0.18);
+    --border-hover: rgba(201,168,76,0.45);
+    --glass: rgba(255,255,255,0.03);
+    --glass2: rgba(201,168,76,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CURSOR ── */
+  #cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform .15s ease, opacity .2s;
+    transform: translate(-50%,-50%);
+  }
+  #cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform .35s cubic-bezier(.25,.46,.45,.94), width .3s, height .3s, border-color .3s;
+    transform: translate(-50%,-50%);
+  }
+  body:has(a:hover) #cursor-ring,
+  body:has(button:hover) #cursor-ring {
+    width: 56px; height: 56px;
+    border-color: var(--gold);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background .4s, padding .4s, backdrop-filter .4s;
+  }
+  nav.scrolled {
+    background: rgba(8,7,7,.88);
+    backdrop-filter: blur(18px);
+    padding: 16px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    display: flex; flex-direction: column;
+    text-decoration: none;
+  }
+  .nav-logo-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+  }
+  .nav-logo-sub {
+    font-size: 8px;
+    letter-spacing: 0.35em;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    transition: color .3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width .3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 10px 26px;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    cursor: none;
+    transition: background .3s, color .3s;
+  }
+  .nav-cta:hover {
+    background: var(--gold);
+    color: var(--bg);
+  }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: none;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 1px;
+    background: var(--gold-light);
+    transition: transform .3s, opacity .3s;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 40px 80px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 30%, rgba(201,168,76,.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 80%, rgba(201,168,76,.04) 0%, transparent 60%),
+      linear-gradient(180deg, #080707 0%, #0e0c0b 100%);
+  }
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    opacity: .35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+  }
+  .hero-ornament {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 700px; height: 700px;
+    border: 1px solid rgba(201,168,76,.06);
+    border-radius: 50%;
+    animation: pulse-ring 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .hero-ornament::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgba(201,168,76,.05);
+    border-radius: 50%;
+  }
+  .hero-ornament::after {
+    content: '';
+    position: absolute;
+    inset: 80px;
+    border: 1px solid rgba(201,168,76,.04);
+    border-radius: 50%;
+  }
+  @keyframes pulse-ring {
+    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%,-50%) scale(1.04); opacity: .6; }
+  }
+  .hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp .8s .3s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(58px, 9vw, 120px);
+    font-weight: 300;
+    line-height: .95;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp .9s .5s forwards;
+    margin-bottom: 12px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin: 32px 0;
+    opacity: 0;
+    animation: fadeUp .8s .7s forwards;
+  }
+  .hero-divider span {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .hero-divider span:last-child {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .hero-divider .diamond {
+    width: 5px; height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--cream-dim);
+    letter-spacing: 0.08em;
+    opacity: 0;
+    animation: fadeUp .8s .8s forwards;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 52px;
+    opacity: 0;
+    animation: fadeUp .8s 1s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    padding: 16px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background .3s, transform .3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,.2);
+    padding: 16px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: border-color .3s, color .3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+  .hero-scroll span {
+    font-size: 8px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 1; height: 50px; }
+    50% { opacity: .4; height: 30px; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 120px 60px; }
+  .section-label {
+    font-size: 8px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .section-body {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--cream-dim);
+    max-width: 560px;
+  }
+  .gold-rule {
+    width: 48px; height: 1px;
+    background: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-bar {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    background: var(--bg2);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-track span {
+    white-space: nowrap;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .marquee-track span::after {
+    content: '✦';
+    color: var(--gold);
+    font-size: 8px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-img-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--bg3);
+    overflow: hidden;
+  }
+  .about-img-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(201,168,76,.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 70%, rgba(201,168,76,.06) 0%, transparent 60%);
+    z-index: 1;
+  }
+  .about-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .placeholder-icon {
+    width: 64px; height: 64px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--gold);
+  }
+  .about-corner {
+    position: absolute;
+    width: 40px; height: 40px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .about-corner.tl { top: -12px; left: -12px; border-width: 1px 0 0 1px; }
+  .about-corner.tr { top: -12px; right: -12px; border-width: 1px 1px 0 0; }
+  .about-corner.bl { bottom: -12px; left: -12px; border-width: 0 0 1px 1px; }
+  .about-corner.br { bottom: -12px; right: -12px; border-width: 0 1px 1px 0; }
+  .about-badge {
+    position: absolute;
+    bottom: 32px;
+    right: -24px;
+    background: var(--gold);
+    color: var(--bg);
+    padding: 20px 28px;
+    text-align: center;
+    z-index: 2;
+  }
+  .about-badge .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 600;
+    display: block;
+    line-height: 1;
+  }
+  .about-badge .label {
+    font-size: 7px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 48px;
+  }
+  .value-pill {
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--cream-dim);
+    transition: border-color .3s, background .3s;
+  }
+  .value-pill:hover {
+    border-color: var(--gold);
+    background: var(--glass2);
+    color: var(--gold-light);
+  }
+  .value-pill .dot {
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── SERVICES ── */
+  #services { background: var(--bg2); }
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 72px;
+  }
+  .services-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 56px;
+  }
+  .tab-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    color: var(--cream-dim);
+    padding: 12px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background .3s, color .3s, border-color .3s;
+  }
+  .tab-btn.active {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+  .tab-btn:hover:not(.active) {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .service-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s;
+    group: true;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .4s;
+  }
+  .service-card:hover { border-color: var(--border-hover); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover .sc-icon { color: var(--gold-light); transform: scale(1.1); }
+  .sc-icon {
+    font-size: 28px;
+    margin-bottom: 24px;
+    display: block;
+    color: var(--gold);
+    transition: color .3s, transform .3s;
+  }
+  .sc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 14px;
+    letter-spacing: 0.02em;
+  }
+  .sc-body {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--cream-dim);
+    margin-bottom: 28px;
+  }
+  .sc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sc-list li {
+    font-size: 11px;
+    color: var(--cream-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sc-list li::before {
+    content: '';
+    width: 16px; height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── FEATURED EXPERIENCE ── */
+  #experience {
+    background: var(--bg);
+    padding: 0;
+  }
+  .exp-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 700px;
+  }
+  .exp-visual {
+    background: var(--bg3);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .exp-visual-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 40% 40%, rgba(201,168,76,.12) 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg3) 0%, #1a1613 100%);
+  }
+  .exp-visual-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .exp-icon-ring {
+    width: 160px; height: 160px;
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .exp-icon-ring::before {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(201,168,76,.12);
+    border-radius: 50%;
+  }
+  .exp-icon-ring .icon { font-size: 52px; }
+  .exp-text-side {
+    padding: 100px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .exp-features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .exp-feature {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+    transition: border-color .3s, background .3s;
+  }
+  .exp-feature:hover {
+    border-color: var(--border-hover);
+    background: var(--glass2);
+  }
+  .ef-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: rgba(201,168,76,.2);
+    font-weight: 300;
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 40px;
+  }
+  .ef-text { display: flex; flex-direction: column; gap: 4px; }
+  .ef-title {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .ef-desc { font-size: 12px; color: var(--cream-dim); line-height: 1.7; }
+
+  /* ── DESTINATIONS ── */
+  #destinations { background: var(--bg2); }
+  .dest-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .dest-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 36px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: none;
+    transition: border-color .3s, transform .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .dest-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .dest-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+  .dest-card:hover::after { opacity: 1; }
+  .dest-flag { font-size: 32px; }
+  .dest-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+  .dest-type {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .dest-desc { font-size: 11px; color: var(--cream-dim); line-height: 1.7; margin-top: 4px; }
+  .dest-arrow {
+    margin-top: auto;
+    font-size: 18px;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity .3s, transform .3s;
+  }
+  .dest-card:hover .dest-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ── PROCESS ── */
+  #process { background: var(--bg); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: 72px;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), var(--border), var(--border), transparent);
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    gap: 20px;
+  }
+  .step-num {
+    width: 56px; height: 56px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    background: var(--bg);
+    position: relative;
+    z-index: 1;
+    transition: background .3s;
+  }
+  .step:hover .step-num {
+    background: var(--gold);
+    color: var(--bg);
+  }
+  .step-title {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    font-weight: 500;
+  }
+  .step-desc { font-size: 11px; color: var(--cream-dim); line-height: 1.7; }
+
+  /* ── STATS ── */
+  .stats-bar {
+    background: var(--gold);
+    padding: 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--bg);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(8,7,7,.6);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--bg2); }
+  .testimonials-slider {
+    margin-top: 64px;
+    position: relative;
+  }
+  .testimonials-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .testimonial-card {
+    border: 1px solid var(--border);
+    padding: 48px 40px;
+    position: relative;
+    background: var(--bg);
+    transition: border-color .3s;
+  }
+  .testimonial-card:hover { border-color: var(--border-hover); }
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: rgba(201,168,76,.15);
+    line-height: .8;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--cream);
+    margin-bottom: 32px;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .author-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .author-info { display: flex; flex-direction: column; gap: 2px; }
+  .author-name { font-size: 12px; color: var(--cream); font-weight: 500; letter-spacing: 0.05em; }
+  .author-role { font-size: 10px; color: var(--gold); letter-spacing: 0.15em; }
+
+  /* ── ENQUIRE / CONTACT ── */
+  #contact { background: var(--bg); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .contact-detail {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cd-icon {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+  .cd-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .cd-value { font-size: 14px; color: var(--cream); }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-dim); }
+  .form-input, .form-select, .form-textarea {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    padding: 14px 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color .3s;
+    width: 100%;
+  }
+  .form-select { cursor: none; }
+  .form-select option { background: var(--bg2); }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    padding: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background .3s, transform .3s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 48px 32px;
+    border: 1px solid var(--gold);
+    background: var(--glass2);
+  }
+  .form-success.show { display: block; }
+  .form-success .check { font-size: 48px; margin-bottom: 16px; }
+  .form-success p { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold-light); font-style: italic; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 80px 60px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  .footer-brand .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+  }
+  .footer-brand .tagline {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--cream-dim);
+    margin-top: 4px;
+    margin-bottom: 24px;
+  }
+  .footer-brand p { font-size: 12px; color: var(--cream-dim); line-height: 1.8; max-width: 280px; }
+  .footer-col h4 {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col ul a {
+    font-size: 12px;
+    color: var(--cream-dim);
+    text-decoration: none;
+    transition: color .3s;
+  }
+  .footer-col ul a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-bottom p { font-size: 10px; color: rgba(200,187,168,.4); letter-spacing: 0.1em; }
+  .social-links { display: flex; gap: 16px; }
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream-dim);
+    text-decoration: none;
+    font-size: 13px;
+    transition: border-color .3s, color .3s, background .3s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); background: var(--glass2); }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,7,7,.98);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color .3s;
+  }
+  .mobile-menu a:hover { color: var(--gold-light); }
+  .mobile-close {
+    position: absolute;
+    top: 28px; right: 60px;
+    background: none;
+    border: none;
+    color: var(--cream-dim);
+    font-size: 28px;
+    cursor: none;
+  }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+  .reveal-delay-4 { transition-delay: .4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 32px; }
+    nav.scrolled { padding: 14px 32px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 80px 32px; }
+    #about { grid-template-columns: 1fr; gap: 60px; }
+    .about-badge { right: 0; }
+    .tab-panel.active { grid-template-columns: 1fr 1fr; }
+    .dest-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 48px; }
+    .process-steps::before { display: none; }
+    .stats-bar { grid-template-columns: 1fr 1fr; padding: 48px 32px; }
+    .testimonials-track { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .exp-inner { grid-template-columns: 1fr; }
+    .exp-visual { min-height: 300px; }
+    .exp-text-side { padding: 60px 32px; }
+  }
+  @media (max-width: 640px) {
+    .hero-title { font-size: 52px; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    section { padding: 64px 24px; }
+    .services-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .tab-panel.active { grid-template-columns: 1fr; }
+    .dest-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr 1fr; padding: 40px 24px; }
+    .services-tabs { overflow-x: auto; flex-wrap: nowrap; }
+    .tab-btn { white-space: nowrap; }
+    .values-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Nav -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">
+    <span class="nav-logo-main">Oara Haven</span>
+    <span class="nav-logo-sub">Where Luxury Finds Privacy</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+    <li><a href="#contact">Enquire</a></li>
+  </ul>
+  <button class="nav-cta" onclick="scrollTo('#contact')">Private Enquiry</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-close" id="mobile-close">✕</button>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#experience" class="mobile-link">Experience</a>
+  <a href="#destinations" class="mobile-link">Destinations</a>
+  <a href="#testimonials" class="mobile-link">Clients</a>
+  <a href="#contact" class="mobile-link">Enquire</a>
+</div>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Botswana's Premier Luxury Concierge</p>
+    <h1 class="hero-title">Where <em>Luxury</em><br>Finds Privacy</h1>
+    <div class="hero-divider">
+      <span></span>
+      <div class="diamond"></div>
+      <span></span>
+    </div>
+    <p class="hero-sub">Private Jets · Exclusive Escapes · World-Class Concierge</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Begin Your Journey</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-bar">
+  <div class="marquee-track" id="marquee-track">
+    <span>Private Jets</span>
+    <span>VIP Transfers</span>
+    <span>Luxury Villas</span>
+    <span>Secret Locations</span>
+    <span>24/7 Concierge</span>
+    <span>Safari Experiences</span>
+    <span>Private Dining</span>
+    <span>Yacht Rentals</span>
+    <span>Total Privacy</span>
+    <span>Bespoke Journeys</span>
+    <span>Private Jets</span>
+    <span>VIP Transfers</span>
+    <span>Luxury Villas</span>
+    <span>Secret Locations</span>
+    <span>24/7 Concierge</span>
+    <span>Safari Experiences</span>
+    <span>Private Dining</span>
+    <span>Yacht Rentals</span>
+    <span>Total Privacy</span>
+    <span>Bespoke Journeys</span>
+  </div>
+</div>
+
+<!-- About -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-img-frame">
+      <div class="about-img-placeholder">
+        <div class="placeholder-icon">✦</div>
+        <p style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream-dim);">Oara Haven</p>
+        <p style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);">Est. Botswana</p>
+      </div>
+    </div>
+    <div class="about-corner tl"></div>
+    <div class="about-corner tr"></div>
+    <div class="about-corner bl"></div>
+    <div class="about-corner br"></div>
+    <div class="about-badge">
+      <span class="num">24</span>
+      <span class="label">Hour Service</span>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="reveal">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">Africa's Most <em>Trusted</em><br>Luxury Concierge</h2>
+      <div class="gold-rule"></div>
+      <p class="section-body">Oara Haven is a luxury concierge and travel company based in Botswana. We specialise in arranging private jets, premium accommodation, luxury transport, and exclusive experiences for VIP clients who value comfort, privacy, and confidentiality.</p>
+      <p class="section-body" style="margin-top:16px;">We are a one-stop service for high-end travellers — from business executives and celebrities to diplomats and private families — who demand seamless, world-class experiences.</p>
+    </div>
+    <div class="values-grid reveal reveal-delay-2">
+      <div class="value-pill"><span class="dot"></span>Privacy First</div>
+      <div class="value-pill"><span class="dot"></span>Excellence</div>
+      <div class="value-pill"><span class="dot"></span>Total Trust</div>
+      <div class="value-pill"><span class="dot"></span>Luxury Always</div>
+      <div class="value-pill"><span class="dot"></span>Personalisation</div>
+      <div class="value-pill"><span class="dot"></span>Discretion</div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="services-header">
+    <div class="reveal">
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Our <em>Services</em></h2>
+    </div>
+    <p class="section-body reveal" style="max-width:340px;font-size:12px;">Every service is crafted with precision, handled with discretion, and delivered to the highest standard.</p>
+  </div>
+  <div class="services-tabs reveal">
+    <button class="tab-btn active" data-tab="concierge">Concierge</button>
+    <button class="tab-btn" data-tab="travel">Travel</button>
+    <button class="tab-btn" data-tab="vip">VIP Experiences</button>
+    <button class="tab-btn" data-tab="tours">Tours</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-concierge">
+    <div class="service-card">
+      <span class="sc-icon">✈</span>
+      <h3 class="sc-title">Private Aviation</h3>
+      <p class="sc-body">Seamless private jet and helicopter arrangements tailored to your schedule and destination.</p>
+      <ul class="sc-list">
+        <li>Private jet bookings</li>
+        <li>Helicopter transfers</li>
+        <li>VIP airport handling</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🚗</span>
+      <h3 class="sc-title">Ground Transport</h3>
+      <p class="sc-body">Luxury chauffeur services and premium vehicle arrangements for any occasion.</p>
+      <ul class="sc-list">
+        <li>Chauffeur services</li>
+        <li>Luxury car fleet</li>
+        <li>Secure transport routes</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">⚓</span>
+      <h3 class="sc-title">Marine & Special</h3>
+      <p class="sc-body">Exclusive yacht rentals, flower deliveries, and bespoke special request fulfilment.</p>
+      <ul class="sc-list">
+        <li>Yacht rentals</li>
+        <li>Flower deliveries</li>
+        <li>Gift & surprise arrangements</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-travel">
+    <div class="service-card">
+      <span class="sc-icon">🌍</span>
+      <h3 class="sc-title">Global Travel</h3>
+      <p class="sc-body">Local and international travel bookings with first-class flight arrangements.</p>
+      <ul class="sc-list">
+        <li>Flight tickets (all classes)</li>
+        <li>Full itinerary creation</li>
+        <li>Executive business trips</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🏛</span>
+      <h3 class="sc-title">Accommodation</h3>
+      <p class="sc-body">Access to the world's most exclusive hotels, resorts, villas, lodges, and penthouses.</p>
+      <ul class="sc-list">
+        <li>Luxury hotels & resorts</li>
+        <li>Private villas & lodges</li>
+        <li>Penthouse arrangements</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">💍</span>
+      <h3 class="sc-title">Romantic Escapes</h3>
+      <p class="sc-body">Unforgettable honeymoon packages and romantic getaways curated to perfection.</p>
+      <ul class="sc-list">
+        <li>Honeymoon packages</li>
+        <li>Anniversary escapes</li>
+        <li>Surprise proposal setups</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-vip">
+    <div class="service-card">
+      <span class="sc-icon">🔒</span>
+      <h3 class="sc-title">Secret Getaways</h3>
+      <p class="sc-body">Confidential trips to private, undisclosed locations — known only to you and your party.</p>
+      <ul class="sc-list">
+        <li>Hidden destination planning</li>
+        <li>Confidential itineraries</li>
+        <li>Zero digital footprint option</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🍽</span>
+      <h3 class="sc-title">Private Dining</h3>
+      <p class="sc-body">Exclusive dining experiences and luxury picnics in extraordinary settings.</p>
+      <ul class="sc-list">
+        <li>Private chef arrangements</li>
+        <li>Bespoke venue setup</li>
+        <li>Luxury bush picnics</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🛡</span>
+      <h3 class="sc-title">Security & Wellness</h3>
+      <p class="sc-body">Private security, bodyguard arrangements, and luxury spa and wellness retreats.</p>
+      <ul class="sc-list">
+        <li>Private security detail</li>
+        <li>Spa & wellness retreats</li>
+        <li>Confidential public figure trips</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-tours">
+    <div class="service-card">
+      <span class="sc-icon">🌿</span>
+      <h3 class="sc-title">Safari Packages</h3>
+      <p class="sc-body">Private luxury safari experiences across Botswana's most spectacular wilderness areas.</p>
+      <ul class="sc-list">
+        <li>Okavango Delta exclusives</li>
+        <li>Chobe private safaris</li>
+        <li>Kalahari experiences</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🏺</span>
+      <h3 class="sc-title">Cultural Experiences</h3>
+      <p class="sc-body">Immersive cultural journeys that connect you authentically to Botswana's heritage.</p>
+      <ul class="sc-list">
+        <li>Traditional village stays</li>
+        <li>Cultural immersion tours</li>
+        <li>Artisan & craft experiences</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="sc-icon">🏔</span>
+      <h3 class="sc-title">Adventure Tours</h3>
+      <p class="sc-body">Exclusive adventure experiences built around your taste and comfort preferences.</p>
+      <ul class="sc-list">
+        <li>Hot air balloon flights</li>
+        <li>Mokoro canoe expeditions</li>
+        <li>Custom route planning</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num" data-target="500">0</span>
+    <span class="stat-label">VIP Clients Served</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="24">0</span>
+    <span class="stat-label">Hour Availability</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="40">0</span>
+    <span class="stat-label">Countries Covered</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="100">0</span>
+    <span class="stat-label">% Confidentiality</span>
+  </div>
+</div>
+
+<!-- Experience -->
+<section id="experience" style="padding:0;">
+  <div class="exp-inner">
+    <div class="exp-visual">
+      <div class="exp-visual-bg"></div>
+      <div class="exp-visual-content">
+        <div class="exp-icon-ring">
+          <span class="icon">✦</span>
+        </div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--gold-light);letter-spacing:.05em;">The Oara Promise</p>
+        <p style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream-dim);">Where Luxury Finds Privacy</p>
+      </div>
+    </div>
+    <div class="exp-text-side">
+      <div class="reveal">
+        <p class="section-label">Why Choose Us</p>
+        <h2 class="section-title">The <em>Oara Haven</em><br>Difference</h2>
+        <div class="gold-rule"></div>
+      </div>
+      <div class="exp-features">
+        <div class="exp-feature reveal reveal-delay-1">
+          <span class="ef-num">01</span>
+          <div class="ef-text">
+            <span class="ef-title">Privacy Guaranteed</span>
+            <span class="ef-desc">Your identity, bookings, and personal information are protected with absolute discretion.</span>
+          </div>
+        </div>
+        <div class="exp-feature reveal reveal-delay-2">
+          <span class="ef-num">02</span>
+          <div class="ef-text">
+            <span class="ef-title">Stress-Free Travel</span>
+            <span class="ef-desc">We plan everything — from jets to accommodation — so you simply enjoy the journey.</span>
+          </div>
+        </div>
+        <div class="exp-feature reveal reveal-delay-3">
+          <span class="ef-num">03</span>
+          <div class="ef-text">
+            <span class="ef-title">Global Network</span>
+            <span class="ef-desc">International partners, airlines, luxury hotels, and exclusive resorts at your fingertips.</span>
+          </div>
+        </div>
+        <div class="exp-feature reveal reveal-delay-4">
+          <span class="ef-num">04</span>
+          <div class="ef-text">
+            <span class="ef-title">Tailor-Made Luxury</span>
+            <span class="ef-desc">No one-size-fits-all. Every service is customised to your lifestyle and expectations.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Destinations -->
+<section id="destinations">
+  <div class="reveal">
+    <p class="section-label">Where We Take You</p>
+    <h2 class="section-title">Featured <em>Destinations</em></h2>
+    <div class="gold-rule"></div>
+    <p class="section-body">From Botswana's untouched wilderness to the world's most exclusive addresses — we handle every detail.</p>
+  </div>
+  <div class="dest-grid">
+    <div class="dest-card reveal reveal-delay-1">
+      <span class="dest-flag">🌿</span>
+      <h3 class="dest-name">Okavango Delta</h3>
+      <span class="dest-type">Safari · Wilderness</span>
+      <p class="dest-desc">A UNESCO World Heritage site. Private mokoro expeditions and luxury bush camps amid untouched nature.</p>
+      <span class="dest-arrow">→</span>
+    </div>
+    <div class="dest-card reveal reveal-delay-2">
+      <span class="dest-flag">🦁</span>
+      <h3 class="dest-name">Chobe National Park</h3>
+      <span class="dest-type">Safari · Wildlife</span>
+      <p class="dest-desc">Home to Africa's largest elephant population. Exclusive game drives with private guides.</p>
+      <span class="dest-arrow">→</span>
+    </div>
+    <div class="dest-card reveal reveal-delay-3">
+      <span class="dest-flag">🏙</span>
+      <h3 class="dest-name">Dubai, UAE</h3>
+      <span class="dest-type">Urban · Ultra-Luxury</span>
+      <p class="dest-desc">Burj Al Arab suites, private yacht dinners, and exclusive shopping experiences in the world's luxury capital.</p>
+      <span class="dest-arrow">→</span>
+    </div>
+    <div class="dest-card reveal reveal-delay-4">
+      <span class="dest-flag">🏝</span>
+      <h3 class="dest-name">Maldives</h3>
+      <span class="dest-type">Ocean · Seclusion</span>
+      <p class="dest-desc">Overwater villas with butler service. Complete privacy and unmatched ocean luxury.</p>
+      <span class="dest-arrow">→</span>
+    </div>
+    <div class="dest-card reveal">
+      <span class="dest-flag">🗼</span>
+      <h3 class="dest-name">Paris, France</h3>
+      <span class="dest-type">Culture · Romance</span>
+      <p class="dest-desc">Private tours of the Louvre, Michelin dining, and the finest suites on the Champs-Élysées.</p>
+      <span class="dest-arrow">→</span>
+    </div>
+    <div class="dest-card reveal reveal-delay-1">
+      <span class="dest-flag">🌊</span>
+      <h3 class="dest-name">Cape Town, SA</h3>
+      <span class="dest-type">Coastal · Wine</span>
+      <p class="dest-desc">Private villa stays, helicopter tours over Table Mountain, and exclusive vineyard experiences.</p>
+      <span class="dest-arrow">→</span>
+    </div>
+    <div class="dest-card reveal reveal-delay-2">
+      <span class="dest-flag">🏔</span>
+      <h3 class="dest-name">Zanzibar</h3>
+      <span class="dest-type">Island · Heritage</span>
+      <p class="dest-desc">Exclusive beach resorts, private dhow cruises, and immersive spice island experiences.</p>
+      <span class="dest-arrow">→</span>
+    </div>
+    <div class="dest-card reveal reveal-delay-3" style="border: 1px dashed rgba(201,168,76,.3); align-items:center; justify-content:center; text-align:center; gap:16px;">
+      <span style="font-size:28px;color:var(--gold);">+</span>
+      <h3 class="dest-name" style="font-size:18px;">Your Destination</h3>
+      <span class="dest-type">Worldwide Coverage</span>
+      <p class="dest-desc" style="font-size:11px;">We arrange travel to any destination, anywhere in the world. Just ask.</p>
+      <a href="#contact" class="btn-outline" style="font-size:9px;padding:10px 20px;">Enquire Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="process">
+  <div class="reveal" style="text-align:center;margin-bottom:0;">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Your Journey <em>Begins Here</em></h2>
+    <div class="gold-rule" style="margin:24px auto;"></div>
+    <p class="section-body" style="margin:0 auto;text-align:center;">Five steps to your perfect, private luxury experience.</p>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h4 class="step-title">Private Enquiry</h4>
+      <p class="step-desc">Reach out via our secure, confidential enquiry form. Your details are protected.</p>
+    </div>
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">2</div>
+      <h4 class="step-title">Consultation</h4>
+      <p class="step-desc">A dedicated concierge advisor contacts you to understand your vision and requirements.</p>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">3</div>
+      <h4 class="step-title">Bespoke Proposal</h4>
+      <p class="step-desc">We design a tailored plan covering every detail of your desired experience.</p>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">4</div>
+      <h4 class="step-title">Seamless Booking</h4>
+      <p class="step-desc">We coordinate all arrangements — jets, accommodation, transfers, and more.</p>
+    </div>
+    <div class="step reveal reveal-delay-4">
+      <div class="step-num">5</div>
+      <h4 class="step-title">Enjoy & Relax</h4>
+      <p class="step-desc">Experience total luxury with 24/7 on-trip concierge support wherever you are.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="reveal" style="margin-bottom:0;">
+    <p class="section-label">Client Voices</p>
+    <h2 class="section-title">Words from Our <em>Guests</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="testimonials-slider">
+    <div class="testimonials-track">
+      <div class="testimonial-card reveal">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">Oara Haven arranged everything flawlessly — from the private jet to the secret safari lodge. Not a single detail was missed. The level of discretion was extraordinary.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div class="author-info">
+            <span class="author-name">Anonymous Executive</span>
+            <span class="author-role">Business Client · Gaborone</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">Our honeymoon was more magical than we could have imagined. They arranged a private villa in Zanzibar with sunset dining on the beach. Absolute perfection.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div class="author-info">
+            <span class="author-name">Mr & Mrs Kgosimore</span>
+            <span class="author-role">Honeymoon Clients · Botswana</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">As a public figure, privacy is non-negotiable for me. Oara Haven truly understands this. My trips are now stress-free and completely confidential. Highly recommended.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">J</div>
+          <div class="author-info">
+            <span class="author-name">Identity Protected</span>
+            <span class="author-role">VIP Client · International</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <div class="reveal">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Begin Your <em>Private</em><br>Journey</h2>
+        <div class="gold-rule"></div>
+        <p class="section-body">All enquiries are treated with the highest level of confidentiality. Our concierge team responds within hours, around the clock.</p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="contact-detail">
+          <div class="cd-icon">📍</div>
+          <div>
+            <p class="cd-label">Location</p>
+            <p class="cd-value">Gaborone, Botswana</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">📞</div>
+          <div>
+            <p class="cd-label">Phone</p>
+            <p class="cd-value">Available upon enquiry</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">✉</div>
+          <div>
+            <p class="cd-label">Email</p>
+            <p class="cd-value">Available upon enquiry</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">🕐</div>
+          <div>
+            <p class="cd-label">Availability</p>
+            <p class="cd-value">24 Hours · 7 Days · 365 Days</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="contact-form" id="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" placeholder="Your first name" id="fname"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" placeholder="Your last name" id="lname"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="your@email.com" id="email"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" placeholder="+267 00 000 000" id="phone"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Service Required</label>
+          <select class="form-select" id="service">
+            <option value="">Select a service...</option>
+            <option>Private Jet Booking</option>
+            <option>Helicopter Transfer</option>
+            <option>Yacht Rental</option>
+            <option>Luxury Accommodation</option>
+            <option>Safari Package</option>
+            <option>VIP Experience</option>
+            <option>Honeymoon Package</option>
+            <option>Executive Business Trip</option>
+            <option>Secret Getaway</option>
+            <option>Full Concierge Package</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell Us About Your Vision</label>
+          <textarea class="form-textarea" placeholder="Describe your ideal experience. All details are kept strictly confidential..." id="message"></textarea>
+        </div>
+        <button class="form-submit" id="form-submit">Submit Private Enquiry</button>
+      </div>
+      <div class="form-success" id="form-success">
+        <div class="check">✦</div>
+        <p>Your enquiry has been received.</p>
+        <p style="font-size:13px;color:var(--cream-dim);margin-top:12px;font-family:'Montserrat',sans-serif;font-style:normal;letter-spacing:.05em;">A concierge advisor will contact you discreetly within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">Oara Haven</div>
+      <div class="tagline">Where Luxury Finds Privacy</div>
+      <p>Botswana's premier luxury concierge service, delivering world-class experiences with total discretion for discerning clients worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Private Aviation</a></li>
+        <li><a href="#services">Luxury Transport</a></li>
+        <li><a href="#services">VIP Experiences</a></li>
+        <li><a href="#services">Safari Packages</a></li>
+        <li><a href="#services">Accommodation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#experience">Why Oara Haven</a></li>
+        <li><a href="#testimonials">Client Stories</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#contact">Enquire</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#destinations">Okavango Delta</a></li>
+        <li><a href="#destinations">Dubai</a></li>
+        <li><a href="#destinations">Maldives</a></li>
+        <li><a href="#destinations">Paris</a></li>
+        <li><a href="#destinations">Worldwide</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Oara Haven. All rights reserved. · Botswana</p>
+    <div class="social-links">
+      <a href="#" class="social-link" title="Facebook">f</a>
+      <a href="#" class="social-link" title="Instagram">IG</a>
+      <a href="#" class="social-link" title="WhatsApp">W</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  (function animRing() {
+    rx += (mx - rx) * .12;
+    ry += (my - ry) * .12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+
+  // ── Nav scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── Hamburger
+  const ham = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileClose = document.getElementById('mobile-close');
+  ham.addEventListener('click', () => mobileMenu.classList.add('open'));
+  mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  document.querySelectorAll('.mobile-link').forEach(l => {
+    l.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // ── Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ── Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // ── Counter animation
+  function animateCounters() {
+    document.querySelectorAll('[data-target]').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.floor(current) + (target === 100 ? '%' : target === 24 ? '/7' : '+');
+        if (current >= target) clearInterval(timer);
+      }, 25);
+    });
+  }
+  const statsBar = document.querySelector('.stats-bar');
+  const statsObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { animateCounters(); statsObs.disconnect(); }
+  }, { threshold: 0.3 });
+  statsObs.observe(statsBar);
+
+  // ── Form submit
+  document.getElementById('form-submit').addEventListener('click', () => {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const service = document.getElementById('service').value;
+    if (!fname || !email || !service) {
+      alert('Please fill in your name, email, and select a service.');
+      return;
+    }
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+  });
+
+  // ── Smooth scroll for buttons
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
